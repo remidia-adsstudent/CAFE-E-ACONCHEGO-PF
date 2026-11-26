@@ -45,16 +45,6 @@ function toggleMobileMenu() {
     }
 }
 
-function scrollToSection(sectionId) {
-    switchTab('home');
-    setTimeout(() => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, 100);
-}
-
 function handleReservationSubmit(event) {
     event.preventDefault();
 
@@ -100,16 +90,8 @@ function formatDate(dateStr) {
 
 function copyReservationCode() {
     if (!currentReservation) return;
-    
-    const textToCopy = currentReservation.code;
-    const dummy = document.createElement("textarea");
-    document.body.appendChild(dummy);
-    dummy.value = textToCopy;
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
-
-    showToast('Código ' + textToCopy + ' copiado!');
+    navigator.clipboard.writeText(currentReservation.code);
+    showToast('Código ' + currentReservation.code + ' copiado!');
 }
 
 function downloadVoucher() {
@@ -128,7 +110,7 @@ Data da Visita:   ${currentReservation.date}
 Horário:          ${currentReservation.time}
 Observações:      ${currentReservation.notes || 'Nenhuma'}
 
-Endereço: Rua das Flores, 450 - Bairro Charme, São Paulo - SP
+Endereço: Rua dos Cafeicultores, nº 123 - Centro
 ========================================
 Agradecemos a sua preferência!
     `.trim();
